@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP-API-DJANGO: Franco Rosas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            padding-top: 50px;
+        }
+        .table {
+            background-color: #fff;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 50px;
+        }
+        .table th,
+        .table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .table th {
+            background-color: #343a40;
+            color: #fff;
+            font-weight: 600;
+            border-color: #454d55;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="display-4 text-center mb-5">Pronóstico Climático</h1>
+        <div class="row mb-4">
+            <div class="col">
+                <form method="get" action="" class="search-bar">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Buscar por ciudad" aria-label="Buscar por ciudad" aria-describedby="button-search" value="{{ query }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-search">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if datos_clima %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Ciudad</th>
+                        <th scope="col">País</th>
+                        <th scope="col">Temperatura (°C)</th>
+                        <th scope="col">Condición</th>
+                        <th scope="col">Humedad (%)</th>
+                        <th scope="col">Velocidad Viento (kph)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for clima in datos_clima %}
+                    <tr>
+                        <td>{{ clima.ciudad }}</td>
+                        <td>{{ clima.país }}</td>
+                        <td>{{ clima.temperatura }}</td>
+                        <td>{{ clima.condición }}</td>
+                        <td>{{ clima.humedad }}</td>
+                        <td>{{ clima.viento_kph }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% elif query %}
+        <div class="alert alert-warning mt-4">No se encontraron resultados para "{{ query }}".</div>
+        {% endif %}
+    </div>
+</body>
+</html>
